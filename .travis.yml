@@ -1,0 +1,18 @@
+language: ruby
+bundler_args: --without development
+script: "bundle exec rspec spec"
+rvm:
+  - jruby-19mode
+  - 1.9.2
+  - 1.9.3
+  - 2.0.0
+  - 2.1.0
+  - 2.1.5
+gemfile:
+  - Gemfile
+notifications:
+  recipients:
+    - matt@thrivesmart.com
+branches:
+  only:
+    - master

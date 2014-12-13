@@ -1,5 +1,7 @@
 # Bootscaf
 
+[![Build Status](https://travis-ci.org/thrivesmart/bootscaf.svg)](https://travis-ci.org/thrivesmart/bootscaf)
+
 TODO: Write a gem description
 
 ## Installation
