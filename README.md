@@ -20,6 +20,14 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+### Development Usage
+
+`bundle exec bin/bootscaf`
+
+## Running Tests
+
+`bundle exec rspec spec`
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/bootscaf/fork )

@@ -2,8 +2,8 @@ require 'thor'
 module Bootscaf
   class CLI < Thor
     
-    desc "verzion", "Ouputs the current version of Bootscaf"
-    def verzion
+    desc "version", "Ouputs the current version of Bootscaf"
+    def version
       puts Bootscaf::VERSION
     end
     
