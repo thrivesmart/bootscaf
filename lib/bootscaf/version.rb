@@ -1,0 +1,3 @@
+module Bootscaf
+  VERSION = "0.0.1"
+end
