@@ -13,11 +13,14 @@ module Bootscaf
     def update(modelname = nil)
       puts options[:all] ? "Running on all models scaffolds." : "Running on #{modelname} scaffolds." 
       
+      is_mac = (RbConfig::CONFIG['host_os'] =~ /^darwin/) >= 0
+      inplace_command = is_mac ? "-i ''" : '--in-place'
+      
       print "Would you like to update app/views/layouts/application.html.erb [y/n(default)]? "
       update_apphtml = $stdin.gets
       if YESSES.include?(update_apphtml)
         print "Updating app/views/layouts/application.html.erb... "
-        print `sed --in-place 's/\n  <title>/\n  <title><%= yield :page_title %>/' app/views/layouts/application.html.erb`
+        print `sed #{inplace_command} -e 's/<title>/<title><%= yield :page_title %>/' app/views/layouts/application.html.erb`
       end
     end
     
