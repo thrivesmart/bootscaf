@@ -14,7 +14,7 @@ module Bootscaf
       puts options[:all] ? "Running on all models scaffolds." : "Running on #{modelname} scaffolds." 
       
       print "Would you like to update app/views/layouts/application.html.erb [y/n(default)]? "
-      update_apphtml = gets
+      update_apphtml = $stdin.gets
       if YESSES.include?(update_apphtml)
         print "Updating app/views/layouts/application.html.erb... "
         print `sed --in-place 's/\n  <title>/\n  <title><%= yield :page_title %>/' app/views/layouts/application.html.erb`

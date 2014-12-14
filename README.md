@@ -20,7 +20,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+After doing a gem install, you can run the `bootscaf` command.
+
+Get Help: $ `bootscaf`
 
 ### Development Usage
 
