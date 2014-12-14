@@ -17,7 +17,7 @@ module Bootscaf
       inplace_command = is_mac ? "-i ''" : '--in-place'
       
       print "Would you like to update app/views/layouts/application.html.erb [y/n(default)]? "
-      update_apphtml = $stdin.gets
+      update_apphtml = $stdin.gets.strip
       print "YOU SAID `#{update_apphtml}`"
       if YESSES.include?(update_apphtml)
         print "Updating app/views/layouts/application.html.erb... "
