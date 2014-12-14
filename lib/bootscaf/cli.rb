@@ -18,9 +18,10 @@ module Bootscaf
       
       print "Would you like to update app/views/layouts/application.html.erb [y/n(default)]? "
       update_apphtml = $stdin.gets
+      print "YOU SAID `#{update_apphtml}`"
       if YESSES.include?(update_apphtml)
         print "Updating app/views/layouts/application.html.erb... "
-        print `sed #{inplace_command} -e 's/<title>/<title><%= yield :page_title %>/' app/views/layouts/application.html.erb`
+        print `sed #{inplace_command} -e 's/<title>/<title><%= yield :page_title %> /' app/views/layouts/application.html.erb`
       end
     end
     
