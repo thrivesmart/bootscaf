@@ -34,6 +34,7 @@ module Bootscaf
         
         print "Updating app/views/layouts/application.html.erb. "
         print `sed #{inplace_command} -e 's/<title>/<title><%= yield :page_title %>/' app/views/layouts/application.html.erb`
+        print "\nUSING `s/<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>/<link href=\"\/\/maxcdn.bootstrapcdn.com\/bootstrap\/#{latest_boostrap_version.gsub(/\//,'\\/')}css\/bootstrap.min.css\" rel=\"stylesheet\">\n<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>/`\n"
         print `sed #{inplace_command} -e "s/<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>/<link href=\"\/\/maxcdn.bootstrapcdn.com\/bootstrap\/#{latest_boostrap_version.gsub(/\//,'\\/')}css\/bootstrap.min.css\" rel=\"stylesheet\">\n<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>/" app/views/layouts/application.html.erb`
         print "\n"
       end
