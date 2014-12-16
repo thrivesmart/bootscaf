@@ -61,7 +61,7 @@ module Bootscaf
         print "\n"
         
         print "Removing '//= require jquery' from app/assets/javascripts/application.js "
-        print `sed #{inplace_command} -e 's/\\/\\/= require jquery\\\n//' app/assets/javascripts/application.js`
+        print `sed #{inplace_command} -e 's/\\/\\/= require jquery$//' app/assets/javascripts/application.js`
         print "\n"
       end
     
