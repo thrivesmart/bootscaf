@@ -76,8 +76,8 @@ module Bootscaf
         print "Wrote #{written} - app/assets/javascripts/jquery.tablesorter.js\n"
         
         tablesorter_init_body = "$('table.tablesorter').tablesorter();\n"
-        written = File.open("#{Dir.pwd}/app/assets/javascripts/jquery.tablesorter-init.js", 'w') { |file| file.write(tablesorter_init_body) }
-        print "Wrote #{written} - app/assets/javascripts/jquery.tablesorter-init.js\n"
+        written = File.open("#{Dir.pwd}/app/assets/javascripts/jquery.tablesorterinit.js", 'w') { |file| file.write(tablesorter_init_body) }
+        print "Wrote #{written} - app/assets/javascripts/jquery.tablesorterinit.js\n"
         
         FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/images/tablesorter-down.png", "#{Dir.pwd}/app/assets/images"
         print "Wrote assets/images/tablesorter-down.png\n"
