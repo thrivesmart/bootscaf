@@ -60,15 +60,15 @@ module Bootscaf
         print `sed #{inplace_command} -e 's/<%= yield %>/<%= yield %>\\\n    <footer id="content-footer" role="contentinfo">\\\n      <div class="container">\\\n        <p class="align-center">\\\n          Copyright &copy; <%= Time.now.year %> Foo · all rights reserved.\\\n        <\\/p>\\\n      <\\/div>\\\n    <\\/footer>\\\n\\\n    <%= yield :before_js %>\\\n    <% unless ENV["GOOGLE_ANALYTICS_ID"].blank? %>\\\n    <script>\\\n      (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){\\\n      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\\\n      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\\\n      })(window,document,"script","\\/\\/www.google-analytics.com\\/analytics.js","ga");\\\n      ga("create", "<%= ENV["GOOGLE_ANALYTICS_ID"] %>", "auto");\\\n      ga("send", "pageview");\\\n    <\\/script>\\\n    <% end %>\\\n    <script src="\\/\\/code.jquery.com\\/jquery-#{latest_jquery_version}.min.js"><\\/script>\\\n    <script src="\\/\\/code.jquery.com\\/ui\\/#{latest_jquery_ui_version}\\/jquery-ui.min.js"><\\/script>\\\n    <script src="\\/\\/maxcdn.bootstrapcdn.com\\/bootstrap\\/#{latest_boostrap_version.gsub(/\//,'\\/')}js\\/bootstrap.min.js"><\\/script>\\\n    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>\\\n    <%= yield :after_js %>"\\\n  /' app/views/layouts/application.html.erb`
         print "\n"
         
-        print "Removing '//= require jquery' from app/assets/javascripts/application.js"
-        print `sed #{inplace_command} -e s/\\/\\/= require jquery\\\n// app/assets/javascripts/application.js`
+        print "Removing '//= require jquery' from app/assets/javascripts/application.js "
+        print `sed #{inplace_command} -e s/\\/\\/= require jquery\\\n/ / app/assets/javascripts/application.js`
         print "\n"
       end
     
     
       print "Would you like to use tablesorter [y(default)/n]? "
       use_tablesorter = $stdin.gets.strip
-      if YESSES.include?(user_tablesorter)
+      if YESSES.include?(use_tablesorter)
         uri = URI.parse('https://raw.githubusercontent.com/christianbach/tablesorter/master/jquery.tablesorter.js')
         http = Net::HTTP.new(uri.host, uri.port); http.use_ssl = true
         http_body = http.get(uri.request_uri).body
