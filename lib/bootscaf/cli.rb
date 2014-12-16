@@ -61,7 +61,7 @@ module Bootscaf
         print "\n"
         
         print "Removing '//= require jquery' from app/assets/javascripts/application.js "
-        print `sed #{inplace_command} -e s/\\/\\/= require jquery\\\n/ / app/assets/javascripts/application.js`
+        print `sed #{inplace_command} -e 's/\\/\\/= require jquery\\\n//' app/assets/javascripts/application.js`
         print "\n"
       end
     
@@ -79,14 +79,14 @@ module Bootscaf
         written = File.open("#{Dir.pwd}/app/assets/javascripts/jquery.tablesorter-init.js", 'w') { |file| file.write(tablesorter_init_body) }
         print "Wrote #{written} - app/assets/javascripts/jquery.tablesorter-init.js\n"
         
-        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../assets/images/tablesorter-down.png", "#{Dir.pwd}/app/assets/images"
+        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/images/tablesorter-down.png", "#{Dir.pwd}/app/assets/images"
         print "Wrote assets/images/tablesorter-down.png\n"
-        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../assets/images/tablesorter-up.png", "#{Dir.pwd}/app/assets/images"
+        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/images/tablesorter-up.png", "#{Dir.pwd}/app/assets/images"
         print "Wrote assets/images/tablesorter-up.png\n"
-        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../assets/images/tablesorter.png", "#{Dir.pwd}/app/assets/images"
+        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/images/tablesorter.png", "#{Dir.pwd}/app/assets/images"
         print "Wrote assets/images/tablesorter.png\n"
         
-        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../assets/stylesheets/tablesorter.css.scss", "#{Dir.pwd}/app/assets/stylesheets"
+        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/tablesorter.css.scss", "#{Dir.pwd}/app/assets/stylesheets"
         print "Wrote assets/stylesheets/tablesorter.css.scss\n"
       end
     
