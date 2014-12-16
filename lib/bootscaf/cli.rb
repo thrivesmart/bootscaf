@@ -18,7 +18,10 @@ module Bootscaf
     def update(modelname = nil)
       puts options[:all] ? "Running on all models scaffolds." : "Running on #{modelname} scaffolds." 
       
-     
+      models = options[:all] ? [] : [ modelname ]
+      if options[:all]
+        models = Dir.glob("#{Dir.pwd}/app/views/*").select { |f| File.directory? f }.map { |f| f.split('/app/views/').last }.reject { |f| f == 'layouts' }
+      end
       
       is_mac = (RbConfig::CONFIG['host_os'] =~ /^darwin/) >= 0
       inplace_command = is_mac ? "-i ''" : '--in-place'
@@ -89,7 +92,17 @@ module Bootscaf
         FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/tablesorter.css.scss", "#{Dir.pwd}/app/assets/stylesheets"
         print "Wrote assets/stylesheets/tablesorter.css.scss\n"
       end
-    
+      
+      models.each do |modelname|
+        print "\n\nWorking on model:#{modelname}\n\n"
+        
+        print "Updating app/views/#{modelname}/_form.html.erb. "
+        print `sed #{inplace_command} -e 's/<div id="error_explanation">/<div id="error_explanation" class="alert alert-danger" role="alert">/' app/views/#{modelname}/_form.html.erb`
+        print `sed #{inplace_command} -e 's/<h2>/<strong>/' app/views/#{modelname}/_form.html.erb`
+        print `sed #{inplace_command} -e 's/<\\/h2>/<\\/strong>/' app/views/#{modelname}/_form.html.erb`
+        print "\n"
+        
+      end
     end
     
   end
