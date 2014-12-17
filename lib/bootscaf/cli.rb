@@ -103,8 +103,8 @@ module Bootscaf
         print `sed #{inplace_command} -e 's/<\\/h2>/<\\/strong>/' app/views/#{modelname}/_form.html.erb`
         
         print `sed #{inplace_command} -e 's/<div class="field">/<div class="col-sm-12">/g' app/views/#{modelname}/_form.html.erb`
-        print `sed #{inplace_command} -e 's/<%= f\\.label :\\(.*?\\) %><br>/<div class="form-group<%= f.object.errors[:&].empty? ? "" : " has-error has-feedback" %>">\\\n<%= f.label :&, { class: "control-label col-sm-2" } %>\\\n<div class="col-sm-10">/g' app/views/#{modelname}/_form.html.erb`
-        print `sed #{inplace_command} -e 's/<%= f.\\(.*?\\)_field :\\(.*?\\) %>/<%= f.\\1_field :\\2, { class: "form-control" } %>\\\n<\\/div><\\/div>/g' app/views/#{modelname}/_form.html.erb`
+        print `sed #{inplace_command} -e 's/<%= f.label :\\(.*\\) %><br>/<div class="form-group<%= f.object.errors[:\\1].empty? ? "" : " has-error has-feedback" %>">\\\n<%= f.label :\\1, { class: "control-label col-sm-2" } %>\\\n<div class="col-sm-10">/g' app/views/#{modelname}/_form.html.erb`
+        print `sed #{inplace_command} -e 's/<%= f.\\(.*\\)_field :\\(.*\\) %>/<%= f.\\1_field :\\2, { class: "form-control" } %>\\\n<\\/div><\\/div>/g' app/views/#{modelname}/_form.html.erb`
         
         print `sed #{inplace_command} -e 's/<div class="actions">/<div class="actions text-center">/' app/views/#{modelname}/_form.html.erb`
         print `sed #{inplace_command} -e 's/<%= f.submit %>/<%= f.submit class: "btn btn-success" %>/' app/views/#{modelname}/_form.html.erb`
