@@ -45,6 +45,14 @@ Of course, get help any time simply by running the naked `bootscaf` binary:
 bootscaf
 ```
 
+### Examples
+
+Run the `bootscaf` binary on a `Post` scaffold/model: 
+
+```sh
+bootscaf update posts
+```
+
 ## Running Tests
 
 `bundle exec rspec spec`
