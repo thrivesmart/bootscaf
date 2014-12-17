@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'thor'
 require 'net/http'
+require_relative 'utils.rb'
 
 module Bootscaf
   class CLI < Thor
