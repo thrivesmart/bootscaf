@@ -157,7 +157,7 @@ module Bootscaf
         
         print "Updating app/views/#{modelname}/new.html.erb. "
         print `sed #{inplace_command} -e 's/<h1>New \\(.*\\)<\\/h1>/<% content_for :page_title do %>\\\nCreate \\1 - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>\\\nNew \\1\\\n<\\/h1>\\\n<\\/div>/' app/views/#{modelname}/new.html.erb`
-        print `sed #{inplace_command} -e 's/<%= link_to '\\''Back'\\'', \\(.*\\)s_path %>/<div class="clearfix"><\\/div>\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-ban-circle\\\\" aria-hidden=\\\\"true\\\\"><\\/span> Cancel".html_safe, \\1s_path, class: "btn btn-default" %>/' app/views/#{modelname}/new.html.erb`
+        print `sed #{inplace_command} -e 's/<%= link_to '\\''Back'\\'', \\(.*\\)s_path %>/<div class="clearfix"><\\/div>\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-ban-circle\\\\" aria-hidden=\\\\"true\\\\"><\\/span> Cancel".html_safe, \\1s_path, class: "btn btn-default" %>\\\n<\\/div>/' app/views/#{modelname}/new.html.erb`
         print "\n"
       end
     end
