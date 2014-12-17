@@ -2,31 +2,48 @@
 
 [![Build Status](https://travis-ci.org/thrivesmart/bootscaf.svg)](https://travis-ci.org/thrivesmart/bootscaf)
 
-TODO: Write a gem description
+Bootscaf is a ruby gem that turns the default `rails generate scaffold`s into fully bootstrappified scaffolds.
+
+Read more in the original blog post.
+
+* Supported [Bootstrap](http://getbootstrap.com/) Version: `3.x`
+* Supported [JQuery](http://jquery.com/) Version: `2.x`
+* Supported [Ruby on Rails](http://rubyonrails.org/) Version: `4.x`
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Get it going in your `Gemfile`:
 
-    gem 'bootscaf'
+```ruby
+    gem 'bootscaf', group: :development
+```
 
-And then execute:
+Install it with `bundle` from your command line:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install bootscaf
+```sh
+bundle
+```
 
 ## Usage
 
-After doing a gem install, you can run the `bootscaf` command.
+Run the `bootscaf` binary on a single scaffold (e.g. `users`) from your rails project's base directory: 
 
-Get Help: $ `bootscaf`
+```sh
+bootscaf update *users*
+```
 
-### Development Usage
+__OR__ Run `bootscaf` binary on all scaffolds:
 
-`bundle exec bin/bootscaf`
+
+```sh
+bootscaf update --all
+```
+
+Of course, get help any time simply by running the naked `bootscaf` binary:
+
+```sh
+bootscaf
+```
 
 ## Running Tests
 

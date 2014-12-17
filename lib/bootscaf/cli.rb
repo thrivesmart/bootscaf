@@ -17,10 +17,10 @@ module Bootscaf
     end
     
     
-    desc "update MODELNAME", "Updates the scaffold for the given MODELNAME (optionally, use --all)"
+    desc "update PLURALMODELNAME", "Updates the scaffold for the given PLURALMODELNAME (optionally, use --all)"
     option :all, :type => :boolean
     def update(modelname = nil)
-      puts options[:all] ? "Running on all models scaffolds." : "Running on #{modelname} scaffolds." 
+      puts options[:all] ? "Running on *all* models scaffolds." : "Running on #{modelname} scaffolds." 
       
       models = options[:all] ? [] : [ modelname ]
       if options[:all]
