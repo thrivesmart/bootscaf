@@ -126,11 +126,9 @@ module Bootscaf
         print `sed #{inplace_command} -e 's/<div id="error_explanation">/<div id="error_explanation" class="alert alert-danger" role="alert">/' app/views/#{modelname}/_form.html.erb`
         print `sed #{inplace_command} -e 's/<h2>/<strong>/' app/views/#{modelname}/_form.html.erb`
         print `sed #{inplace_command} -e 's/<\\/h2>/<\\/strong>/' app/views/#{modelname}/_form.html.erb`
-        
         print `sed #{inplace_command} -e 's/<div class="field">/<div class="row">/g' app/views/#{modelname}/_form.html.erb`
         print `sed #{inplace_command} -e 's/<%= f.label :\\(.*\\) %><br>/<div class="form-group<%= f.object.errors[:\\1].empty? ? "" : " has-error has-feedback" %>">\\\n<%= f.label :\\1, { class: "control-label col-sm-2" } %>\\\n<div class="col-sm-10">/g' app/views/#{modelname}/_form.html.erb`
         print `sed #{inplace_command} -e 's/<%= f.\\(.*\\)_field :\\(.*\\) %>/<%= f.\\1_field :\\2, { class: "form-control" } %>\\\n<\\/div>\\\n<\\/div>/g' app/views/#{modelname}/_form.html.erb`
-        
         print `sed #{inplace_command} -e 's/<div class="actions">/<div class="actions text-center">/' app/views/#{modelname}/_form.html.erb`
         print `sed #{inplace_command} -e 's/<%= f.submit %>/<%= f.submit class: "btn btn-success" %>/' app/views/#{modelname}/_form.html.erb`
         print "\n"
@@ -162,15 +160,15 @@ module Bootscaf
         print `sed #{inplace_command} -e 's/<%= link_to '\\''Back'\\'', \\(.*\\)s_path %>/<div class="clearfix"><\\/div>\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-ban-circle\\\\" aria-hidden=\\\\"true\\\\"><\\/span> Cancel".html_safe, \\1s_path, class: "btn btn-default" %>\\\n<\\/div>/' app/views/#{modelname}/new.html.erb`
         print "\n"
         
-        
         print "Updating app/views/#{modelname}/show.html.erb. "
-        print `sed #{inplace_command} -e 's/<p id="notice"><%= notice %><\\/p>/<% content_for :page_title do %>\\\n#{Bootscaf::Utils.singularize(modelname)} Details\\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>\\\n<div class="pull-left">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-step-backward\\\\" aria-hidden=\\\\"true\\\\"><\\/span>".html_safe, #{modelname}_path(@#{Bootscaf::Utils.singularize(modelname)}), class: "btn btn-default", title: "Back to #{modelname}" %>\\\n\\&nbsp;\\\n<\\/div>\\\n<div class="pull-right">\\\n<%= link_to "Delete #{Bootscaf::Utils.singularize(modelname)}...", #{modelname}_path(@#{modelname}), method: :delete, data: { confirm: "Are you sure you want to delete this #{Bootscaf::Utils.singularize(modelname)}?" }, class: "btn btn-danger" %>\\\n<\\/div>\\\n#{Bootscaf::Utils.singularize(modelname)} Details\\\n<\\/h1>\\\n<\\/div>/' app/views/#{modelname}/show.html.erb`
+        print `sed #{inplace_command} -e 's/<p id="notice"><%= notice %><\\/p>/<% content_for :page_title do %>\\\n#{Bootscaf::Utils.singularize(modelname)} Details\\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>\\\n<div class="pull-left">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-step-backward\\\\" aria-hidden=\\\\"true\\\\"><\\/span>".html_safe, #{modelname}_path, class: "btn btn-default", title: "Back to #{modelname}" %>\\\n\\&nbsp;\\\n<\\/div>\\\n<div class="pull-right">\\\n<%= link_to "Delete #{Bootscaf::Utils.singularize(modelname)}...", #{Bootscaf::Utils.singularize(modelname)}_path(@#{modelname}), method: :delete, data: { confirm: "Are you sure you want to delete this #{Bootscaf::Utils.singularize(modelname)}?" }, class: "btn btn-danger" %>\\\n<\\/div>\\\n#{Bootscaf::Utils.singularize(modelname)} Details\\\n<\\/h1>\\\n<\\/div>/' app/views/#{modelname}/show.html.erb`
         print `sed #{inplace_command} -e 's/<p>/<div class="row">/' app/views/#{modelname}/show.html.erb`
         print `sed #{inplace_command} -e 's/<\\/p>/<\\/div>/' app/views/#{modelname}/show.html.erb`
         print `sed #{inplace_command} -e 's/<strong>\\(.*\\):<\\/strong>/<label class="col-sm-3 text-right text-muted">\\1<\\/label>/g' app/views/#{modelname}/show.html.erb`
         print `sed #{inplace_command} -e 's/<%= @\\(.*\\)\\.\\(.*\\) %>/<div class="col-sm-9"><%= @\\1.\\2 %><\\/div>/g' app/views/#{modelname}/show.html.erb`
+        print `sed #{inplace_command} -e 's/<%= link_to '\\''Edit'\\'', edit_\\(.*\\)_path(@\\(.*\\)) %> \\|//' app/views/#{modelname}/show.html.erb`
+        print `sed #{inplace_command} -e 's/<%= link_to '\\''Back'\\'', \\(.*\\)s_path %>//' app/views/#{modelname}/show.html.erb`
         print "\n"
-        
       end
     end
     
