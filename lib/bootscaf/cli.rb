@@ -110,9 +110,9 @@ module Bootscaf
         print `sed #{inplace_command} -e 's/<%= f.submit %>/<%= f.submit class: "btn btn-success" %>/' app/views/#{modelname}/_form.html.erb`
         
         print "Updating app/views/#{modelname}/edit.html.erb. "
-        print `sed #{inplace_command} -e 's/<h1>Editing \\(.*\\)</h1>/<% content_for :page_title do %>\\\nEdit \\1 - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>Editing \\1</h1>\\\n</div>/g' app/views/#{modelname}/edit.html.erb`
-        print `sed #{inplace_command} -e 's/<%= link_to \\'Show\\', @\\(.*\\) %> \\|/<div class="clearfix"></div>\\\n<div class="pull-left">\\\n<%= link_to \\'<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Cancel\\'.html_safe, @\\1, class: \\'btn btn-default\\' %>\\\n</div>/g' app/views/#{modelname}/edit.html.erb`
-        print `sed #{inplace_command} -e 's/<%= link_to \\'Back\\', \\(.*\\)s_path %>/<div class="pull-right">\\\n<%= link_to \\'<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete \\1...\\', @\\1, method: :delete, data: { confirm: "Are you sure you\\'d like to delete this \\1?" }, class: "btn btn-danger" %>\\\n</div>\\\n</div>/g' app/views/#{modelname}/edit.html.erb`  
+        print `sed #{inplace_command} -e 's/<h1>Editing \\(.*\\)<\\/h1>/<% content_for :page_title do %>\\\nEdit \\1 - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>Editing \\1<\\/h1>\\\n<\\/div>/g' app/views/#{modelname}/edit.html.erb`
+        print `sed #{inplace_command} -e 's/<%= link_to \\'Show\\', @\\(.*\\) %> \\|/<div class="clearfix"><\\/div>\\\n<div class="pull-left">\\\n<%= link_to \\'<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"><\\/span> Cancel\\'.html_safe, @\\1, class: \\'btn btn-default\\' %>\\\n<\\/div>/g' app/views/#{modelname}/edit.html.erb`
+        print `sed #{inplace_command} -e 's/<%= link_to \\'Back\\', \\(.*\\)s_path %>/<div class="pull-right">\\\n<%= link_to \\'<span class="glyphicon glyphicon-trash" aria-hidden="true"><\\/span> Delete \\1...\\', @\\1, method: :delete, data: { confirm: "Are you sure you\\'d like to delete this \\1?" }, class: "btn btn-danger" %>\\\n<\\/div>\\\n<\\/div>/g' app/views/#{modelname}/edit.html.erb`  
         print "\n"
         
       end
