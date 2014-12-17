@@ -29,7 +29,7 @@ bundle
 Run the `bootscaf` binary on a single scaffold (e.g. `users`) from your rails project's base directory: 
 
 ```sh
-bootscaf update NNN
+bootscaf update NNNs
 ```
 
 __OR__ Run `bootscaf` binary on all scaffolds:
