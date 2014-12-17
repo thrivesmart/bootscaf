@@ -15,6 +15,7 @@ module Bootscaf
       puts Bootscaf::VERSION
     end
     
+    
     desc "update MODELNAME", "Updates the scaffold for the given MODELNAME (optionally, use --all)"
     option :all, :type => :boolean
     def update(modelname = nil)
@@ -159,6 +160,15 @@ module Bootscaf
         print `sed #{inplace_command} -e 's/<h1>New \\(.*\\)<\\/h1>/<% content_for :page_title do %>\\\nCreate \\1 - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>\\\nNew \\1\\\n<\\/h1>\\\n<\\/div>/' app/views/#{modelname}/new.html.erb`
         print `sed #{inplace_command} -e 's/<%= link_to '\\''Back'\\'', \\(.*\\)s_path %>/<div class="clearfix"><\\/div>\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-ban-circle\\\\" aria-hidden=\\\\"true\\\\"><\\/span> Cancel".html_safe, \\1s_path, class: "btn btn-default" %>\\\n<\\/div>/' app/views/#{modelname}/new.html.erb`
         print "\n"
+        
+        
+        print "Updating app/views/#{modelname}/show.html.erb. "
+        print `sed #{inplace_command} -e 's/<p id="notice"><%= notice %><\\/p>/<% content_for :page_title do %>\\\n#{Bootscaf::Utils.singularize(modelname)} Details\\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>\\\n<div class="pull-left">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-step-backward\\\\" aria-hidden=\\\\"true\\\\"></span>".html_safe, #{modelname}_path(@#{Bootscaf::Utils.singularize(modelname)}), class: "btn btn-default", title: "Back to #{modelname}" %>\\\n&nbsp;\\\n</div>\\\n<div class="pull-right">\\\n<%= link_to "Delete #{Bootscaf::Utils.singularize(modelname)}...", #{modelname}_path(@#{modelname}), method: :delete, data: { confirm: "Are you sure you want to delete this #{Bootscaf::Utils.singularize(modelname)}?" }, class: "btn btn-danger" %>\\\n</div>\\\n#{Bootscaf::Utils.singularize(modelname)} Details\\\n</h1>\\\n</div>/' app/views/#{modelname}/show.html.erb`
+        print `sed #{inplace_command} -e 's/<p>/<div class="row">/' app/views/#{modelname}/show.html.erb`
+        print `sed #{inplace_command} -e 's/<\\/p>/<\\/div>/' app/views/#{modelname}/show.html.erb`
+        print `sed #{inplace_command} -e 's/<strong>\\(.*\\):<\\/strong>/' app/views/#{modelname}/show.html.erb`
+        print "\n"
+        
       end
     end
     
