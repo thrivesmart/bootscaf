@@ -123,7 +123,7 @@ module Bootscaf
         print `sed #{inplace_command} -e 's/<th colspan="3"><\\/th>//' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<td><%= link_to '\\''Show'\\'', \\(.*\\) %><\\/td>//' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<td><%= link_to '\\''Edit'\\'', edit_\\(.*\\)_path(\\(.*\\)) %><\\/td>//' app/views/#{modelname}/index.html.erb`
-        print `sed #{inplace_command} -e 's/<td><%= link_to '\\''Destroy'\\'', \\(.*\\), method: :delete, \\(.*\\) %></td>//' app/views/#{modelname}/index.html.erb`
+        print `sed #{inplace_command} -e 's/<td><%= link_to '\\''Destroy'\\'', \\(.*\\), method: :delete, data: { confirm: '\\''Are you sure?'\\'' } %><\\/td>//' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<% @\\(.*\\)s.each do \\|\\(.*\\)\\| %>/<% unless @\\1s.any? %>\\\n<tr id="empty-table">\\\n<td class="bg-warning" colspan="2">No \\1s created yet.<\\/td>\\\n<\\/tr>\\\n<% end %>\\\n<% @\\1s.each do \\|\\1\\| %>\\\n<tr class="linked-row" data-href="<%= \\1_path(\\1) %>">/' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<tr>//' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<thead>/<thead>\\\n<tr>/' app/views/#{modelname}/index.html.erb`
