@@ -132,7 +132,7 @@ module Bootscaf
         print `sed #{inplace_command} -e 's/<div class="actions">/<div class="actions text-center">/' app/views/#{modelname}/_form.html.erb`
         print `sed #{inplace_command} -e 's/<%= f.submit %>/<%= f.submit class: "btn btn-success" %>/' app/views/#{modelname}/_form.html.erb`
         print "\n"
-                
+        
         print "Updating app/views/#{modelname}/edit.html.erb. "
         print `sed #{inplace_command} -e 's/<h1>Editing \\(.*\\)<\\/h1>/<% content_for :page_title do %>\\\nEdit \\1 - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>Editing \\1<\\/h1>\\\n<\\/div>/' app/views/#{modelname}/edit.html.erb`
         print `sed #{inplace_command} -e 's/<%= link_to '\\''Show'\\'', @\\(.*\\) %> \\|/<div class="clearfix"><\\/div>\\\n<div class="pull-left">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-ban-circle\\\\" aria-hidden=\\\\"true\\\\"><\\/span> Cancel".html_safe, @\\1, class: "btn btn-default" %>\\\n<\\/div>/' app/views/#{modelname}/edit.html.erb`
@@ -153,9 +153,12 @@ module Bootscaf
         print `sed #{inplace_command} -e 's/<td><%= \\(.*\\)\\.\\(.*\\) %><\\/td>/<td><%= link_to \\1.\\2, \\1 %><\\/td>/' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<br>//' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<%= link_to '\\''New \\(.*\\)'\\'', new_\\(.*\\)_path %>//' app/views/#{modelname}/index.html.erb`
-        
         print "\n"
         
+        print "Updating app/views/#{modelname}/new.html.erb. "
+        print `sed #{inplace_command} -e 's/<h1>New \\(.*\\)<\\/h1>/<% content_for :page_title do %>\\\nCreate \\1 - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>\\\nNew \\1\\\n<\\/h1>\\\n<\\/div>/' app/views/#{modelname}/new.html.erb`
+        print `sed #{inplace_command} -e 's/<%= link_to '\\''Back'\\'', \\(.*\\)s_path %>/<div class="clearfix"></div>\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-ban-circle\\\\" aria-hidden=\\\\"true\\\\"><\\/span> Cancel".html_safe, \\1s_path, class: "btn btn-default" %>/' app/views/#{modelname}/edit.html.erb`
+        print "\n"
       end
     end
     
