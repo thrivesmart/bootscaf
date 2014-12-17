@@ -127,6 +127,7 @@ module Bootscaf
         print `sed #{inplace_command} -e 's/<% @\\(.*\\)s.each do \\|\\(.*\\)\\| %>/<% unless @\\1s.any? %>\\\n<tr id="empty-table">\\\n<td class="bg-warning" colspan="2">No \\1s created yet.<\\/td>\\\n<\\/tr>\\\n<% end %>\\\n<% @\\1s.each do \\|\\1\\| %>\\\n<tr class="linked-row" data-href="<%= \\1_path(\\1) %>">/' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<tr>//' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<thead>/<thead>\\\n<tr>/' app/views/#{modelname}/index.html.erb`
+        print `sed #{inplace_command} -e 's/<td><%= \\(.*\\).\\(.*\\) %><\\/td>/<td><%= link_to \\1.\\2, \\1 %><\\/td>/' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<br>//' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<%= link_to '\\''New \\(.*\\)'\\'', new_\\(.*\\)_path %>//' app/views/#{modelname}/index.html.erb`
         
