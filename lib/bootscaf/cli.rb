@@ -72,6 +72,12 @@ module Bootscaf
         print "\n"
       end
     
+      print "Would you like to overwrite scaffolds.css.scss with the bootrapified version [y/n(default)]? "
+      use_scaffolds_css = $stdin.gets.strip
+      if YESSES.include?(use_scaffolds_css)
+        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/scaffolds.css.scss", "#{Dir.pwd}/app/assets/stylesheets"
+        print "Wrote assets/stylesheets/scaffolds.css.scss\n"
+      end
     
       print "Would you like to use tablesorter [y(default)/n]? "
       use_tablesorter = $stdin.gets.strip
