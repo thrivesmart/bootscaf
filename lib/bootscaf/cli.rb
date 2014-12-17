@@ -5,6 +5,7 @@ require 'net/http'
 module Bootscaf
   class CLI < Thor
     YESSES = ['y', 'yes', 'Y', 'Yes', 'YES']
+    NOS = ['n', 'no', 'N', 'No', 'NO']
     LAST_KNOWN_BOOTSTRAP_VERSION = '3.3.1/'
     LAST_KNOWN_JQUERY_VERSION = '2.1.1'
     LAST_KNOWN_JQUERY_UI_VERSION = '1.11.2'
@@ -72,7 +73,7 @@ module Bootscaf
     
       print "Would you like to use tablesorter [y(default)/n]? "
       use_tablesorter = $stdin.gets.strip
-      if YESSES.include?(use_tablesorter)
+      unless NOS.include?(use_tablesorter)
         uri = URI.parse('https://raw.githubusercontent.com/christianbach/tablesorter/master/jquery.tablesorter.js')
         http = Net::HTTP.new(uri.host, uri.port); http.use_ssl = true
         http_body = http.get(uri.request_uri).body
@@ -92,6 +93,28 @@ module Bootscaf
         
         FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/tablesorter.css.scss", "#{Dir.pwd}/app/assets/stylesheets"
         print "Wrote assets/stylesheets/tablesorter.css.scss\n"
+      end
+    
+      print "Would you like to make entire index.html.erb table rows clickable [y(default)/n]? "
+      use_clickable_rows = $stdin.gets.strip
+      unless NOS.include?(use_clickable_rows)
+        linkedrow_init_body = "$(\".linked-row\").click(function() { window.document.location = $(this).attr(\"data-href\"); });\n"
+        written = File.open("#{Dir.pwd}/app/assets/javascripts/table-linked-row.js", 'w') { |file| file.write(linkedrow_init_body) }
+        print "Wrote #{written} - app/assets/javascripts/table-linked-row.js\n"
+        
+        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/table-linked-row.css.scss", "#{Dir.pwd}/app/assets/stylesheets"
+        print "Wrote assets/stylesheets/table-linked-row.css.scss\n"
+      end
+    
+      print "Would you like to add a 'click to select-all' input element [y(default)/n]? "
+      use_click_to_selectall = $stdin.gets.strip
+      unless NOS.include?(use_click_to_selectall)
+        selectall_init_body = "$('.select-all-on-click').click(function () { this.select(); });\n"
+        written = File.open("#{Dir.pwd}/app/assets/javascripts/select-all-on-click.js", 'w') { |file| file.write(selectall_init_body) }
+        print "Wrote #{written} - app/assets/javascripts/select-all-on-click.js\n"
+        
+        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/select-all-on-click.css.scss", "#{Dir.pwd}/app/assets/stylesheets"
+        print "Wrote assets/stylesheets/select-all-on-click.css.scss\n"
       end
       
       models.each do |modelname|
