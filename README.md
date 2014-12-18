@@ -4,7 +4,7 @@
 
 Bootscaf is a ruby gem that turns the default `rails generate scaffold`s into fully bootstrappified scaffolds.
 
-Read more in the original blog post.
+Read more in the [original blog post](https://medium.com/@thrivesmart/bootscaf-easily-sexify-your-rails-scaffolds-to-use-bootstrap-d30c09d8649d).
 
 * Supported [Bootstrap](http://getbootstrap.com/) Version: `3.x`
 * Supported [JQuery](http://jquery.com/) Version: `2.x`
