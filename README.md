@@ -53,6 +53,38 @@ Run the `bootscaf` binary on a `Post` scaffold/model:
 bootscaf update posts
 ```
 
+## Extras
+
+There are a few conveniences added that we use in the vast majority of our projects. They are:
+
+1) Helper css class names on the `<body>` element for page-specific CSS: 
+
+```erb
+<body class="controller-<%= controller.controller_name.dasherize %> action-<%= controller.action_name.dasherize %>">
+```
+
+2) Google analytics if an environment variable is set:
+
+```ruby
+ENV[“GOOGLE_ANALYTICS_ID"]
+```
+
+3) A click-to-select css selector for read-only inputs:
+
+```html
+<input class="select-all-on-click" type="text" value="long value" readonly>
+```
+
+4) Page `<title>`s set in views:
+
+```erb
+<% content_for :page_title do %>
+Edit Model — 
+<% end %>
+```
+
+And that’s about it, for now!
+
 ## Running Tests
 
 `bundle exec rspec spec`
