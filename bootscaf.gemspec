@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Bootscaf::VERSION
   spec.authors       = ["Matthew Moore"]
   spec.email         = ["hello@thrivesmart.com"]
-  spec.summary       = %q{Overwrites a Ruby on Rails scaffold generation and makes it look great.}
-  spec.description   = %q{Really great.}
+  spec.summary       = %q{I absolutely love the rails g scaffold command for new projects. But I can’t stand that there’s no easy way to output good-lookin’ bootstrap layouts by default. I also haven’t found a twitter bootstap gem that can go back to old scaffolds and just re-jigger them at any time. So we created Bootscaf, a gem that lets you run a command that seds all your scaffold view files to use bootstrap friendly classes.  Best of all, it’s open-source.}
+  spec.description   = %q{Easily turn your rails generated scaffolds into fully bootstrappified views.}
   spec.homepage      = "https://github.com/thrivesmart/bootscaf"
   spec.license       = "MIT"
 
