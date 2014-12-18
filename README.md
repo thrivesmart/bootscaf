@@ -66,7 +66,7 @@ There are a few conveniences added that we use in the vast majority of our proje
 2) Google analytics if an environment variable is set:
 
 ```ruby
-ENV[“GOOGLE_ANALYTICS_ID"]
+ENV["GOOGLE_ANALYTICS_ID"]
 ```
 
 3) A click-to-select css selector for read-only inputs:
