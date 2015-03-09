@@ -149,6 +149,7 @@ module Bootscaf
         print `sed #{inplace_command} -e 's/<h1>Listing \\(.*\\)s<\\/h1>/<% content_for :page_title do %>\\\n\\1s - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>\\\n<div class="pull-left">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-step-backward\\\\" aria-hidden=\\\\"true\\\\"><\\/span>".html_safe, "\\/", class: "btn btn-default", title: "Back" %>\\\n\\&nbsp;\\\n<\\/div>\\\n\\\n<div class="pull-right">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-plus-sign\\\\" aria-hidden=\\\\"true\\\\"><\\/span> New \\1".html_safe, [:new, :\\1], class: "btn btn-success" %>\\\n<\\/div>\\\nListing \\1s\\\n<\\/h1>\\\n<\\/div>\\\n\\\n<table class="table table-striped table-hover tablesorter" id="\\1s-table">/' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<th>\\(.*\\)<\\/th>/<th><span>\\1<\\/span><\\/th>/g' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<table>//' app/views/#{modelname}/index.html.erb`
+        print `sed #{inplace_command} -e 's/<\\/table>/<\\/table>\\\n<\\/div>/' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<th colspan="3"><\\/th>//' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<td><%= link_to '\\''Show'\\'', \\(.*\\) %><\\/td>//' app/views/#{modelname}/index.html.erb`
         print `sed #{inplace_command} -e 's/<td><%= link_to '\\''Edit'\\'', edit_\\(.*\\)_path(\\(.*\\)) %><\\/td>//' app/views/#{modelname}/index.html.erb`
