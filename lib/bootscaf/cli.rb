@@ -137,6 +137,7 @@ module Bootscaf
         print `sed #{inplace_command} -e 's/<%= f.\\(.*\\)_field :\\(.*\\) %>/<%= f.\\1_field :\\2, { class: "form-control" } %>\\\n<\\/div>\\\n<\\/div>/g' app/views/#{modelname}/_form.html.erb`
         print `sed #{inplace_command} -e 's/<%= f.\\(.*\\)_area :\\(.*\\) %>/<%= f.\\1_area :\\2, { class: "form-control" } %>\\\n<\\/div>\\\n<\\/div>/g' app/views/#{modelname}/_form.html.erb`
         print `sed #{inplace_command} -e 's/<%= f.\\(.*\\)_box :\\(.*\\) %>/<%= f.\\1_box :\\2, { class: "form-control" } %>\\\n<\\/div>\\\n<\\/div>/g' app/views/#{modelname}/_form.html.erb`
+        print `sed #{inplace_command} -e 's/<%= f.\\(.*\\)_select :\\(.*\\) %>/<%= f.\\1_select :\\2, { class: "form-control" } %>\\\n<\\/div>\\\n<\\/div>/g' app/views/#{modelname}/_form.html.erb`
         print `sed #{inplace_command} -e 's/<div class="actions">/<div class="actions text-center">/' app/views/#{modelname}/_form.html.erb`
         print `sed #{inplace_command} -e 's/<%= f.submit %>/<%= f.submit class: "btn btn-success" %>/' app/views/#{modelname}/_form.html.erb`
         print "\n"
