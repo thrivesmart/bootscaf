@@ -2,6 +2,7 @@
 require 'thor'
 require 'net/http'
 require_relative 'utils.rb'
+require_relative 'version.rb'
 
 module Bootscaf
   class CLI < Thor
