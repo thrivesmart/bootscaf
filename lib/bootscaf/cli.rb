@@ -8,9 +8,9 @@ module Bootscaf
   class CLI < Thor
     YESSES = ['y', 'yes', 'Y', 'Yes', 'YES']
     NOS = ['n', 'no', 'N', 'No', 'NO']
-    LAST_KNOWN_BOOTSTRAP_VERSION = '3.3.1/'
-    LAST_KNOWN_JQUERY_VERSION = '2.1.1'
-    LAST_KNOWN_JQUERY_UI_VERSION = '1.11.2'
+    LAST_KNOWN_BOOTSTRAP_VERSION = '3.3.5/'
+    LAST_KNOWN_JQUERY_VERSION = '2.1.4'
+    LAST_KNOWN_JQUERY_UI_VERSION = '1.11.4'
     
     desc "version", "Ouputs the current version of Bootscaf"
     def version
