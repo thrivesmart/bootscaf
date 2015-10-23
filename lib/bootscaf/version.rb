@@ -1,3 +1,3 @@
 module Bootscaf
-  VERSION = "0.1.1"
+  VERSION = "0.1.15"
 end
