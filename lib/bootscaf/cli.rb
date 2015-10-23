@@ -17,13 +17,13 @@ module Bootscaf
       puts Bootscaf::VERSION
     end
     
-    desc "nest PLURALMODELNAME>PLURALMODELNAME[>PLURALMODELNAME...]", "Updates the scaffold controller and views to nest the models"
+    desc "nest PLURALMODELNAME:PLURALMODELNAME[:PLURALMODELNAME...]", "Updates the scaffold controller and views to nest the models"
     def nest(nestpath)
       
       is_mac = (RbConfig::CONFIG['host_os'] =~ /^darwin/) >= 0
       icmd = is_mac ? "-i ''" : '--in-place'
       
-      fullpath = nestpath.split('>').map { |a| a.downcase }
+      fullpath = nestpath.split(':').map { |a| a.downcase }
       ancestors_only = fullpath.first(fullpath.size-1)
       singularized_ancestors = ancestors_only.map {|a| Bootscaf::Utils.singularize(a) }
       modelname = fullpath.last
