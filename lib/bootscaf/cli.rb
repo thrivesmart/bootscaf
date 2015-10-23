@@ -29,7 +29,8 @@ module Bootscaf
       modelname = fullpath.last
       singular_modelname = Bootscaf::Utils.singularize(modelname)
       
-      print "Running on #{modelname} scaffolds with nesting path `#{singularized_ancestors.join(' > ')}`."
+      # print "Running on #{modelname} scaffolds with nesting path `#{singularized_ancestors.join(' > ')}`."
+      $stderr.puts "Running on #{modelname} scaffolds with nesting path `#{singularized_ancestors.join(' > ')}`."
       
       print "Updating app/controllers/#{modelname}_controller.rb."
       singularized_ancestors.each do |sa|
@@ -48,7 +49,7 @@ module Bootscaf
       print `sed #{icmd} -e 's/form_for(@#{singular_modelname})/form_for([@#{singularized_ancestors.join(', @')}#{singular_modelname}])/' app/views/#{modelname}/_form.html.erb`
       
       print "Updating app/views/#{modelname}/edit.html.erb."
-      print `sed #{icmd} -e 's/Edit \\(.*\\) - $/Edit \\1 - #{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %>/' app/views/#{modelname}/edit.html.erb`
+      print `sed #{icmd} -e 's/Edit \\(.*\\) - $/Edit \\1 - #{singularized_ancestors.last.to_s.capitalize} <%= @#{singularized_ancestors.last}.id %>/' app/views/#{modelname}/edit.html.erb`
       print `sed #{icmd} -e 's/<h1>Editing \\(.*\\)<\\/h1>/<h1>Editing \\1 <small>#{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %><\\/small><\\/h1>/' app/views/#{modelname}/edit.html.erb`
       print `sed #{icmd} -e 's/.html_safe, @#{singular_modelname}, /.html_safe, [@#{singularized_ancestors.join(', @')}#{singular_modelname}], /' app/views/#{modelname}/edit.html.erb`
     
