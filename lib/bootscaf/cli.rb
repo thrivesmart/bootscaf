@@ -34,28 +34,28 @@ module Bootscaf
       print "Updating app/controllers/#{modelname}_controller.rb.\n"
       singularized_ancestors.each do |sa|
         print `sed #{icmd} -e 's/Controller < ApplicationController/Controller < ApplicationController\\\nbefore_action :set_#{sa}/' app/controllers/#{modelname}_controller.rb`
-        print `sed #{icmd} -e 's/private/private\\\ndef set_#{sa}\\\n@#{sa} = #{sa.capitalize}.find_by_id(params[:#{sa}_id])\\\nraise ActiveRecord::RecordNotFound unless @#{sa}\\\nend/' app/controllers/#{modelname}_controller.rb`
-        print `sed #{icmd} -e 's/.permit(\\(.*\\):#{sa}_id,\\(.*\\))/.permit(\\1\\2)/' app/controllers/#{modelname}_controller.rb`
+        print `sed #{icmd} -e 's/private/private\\\n\\\ndef set_#{sa}\\\n@#{sa} = #{sa.capitalize}.find_by_id(params[:#{sa}_id])\\\nraise ActiveRecord::RecordNotFound unless @#{sa}\\\nend\\\n/' app/controllers/#{modelname}_controller.rb`
+        print `sed #{icmd} -e 's/.permit(\\(.*\\):#{sa}_id, \\(.*\\))/.permit(\\1\\2)/' app/controllers/#{modelname}_controller.rb`
       end
       print `sed #{icmd} -e 's/#{singular_modelname.capitalize}.all/@#{singularized_ancestors.last}.#{modelname}.all/' app/controllers/#{modelname}_controller.rb`
       print `sed #{icmd} -e 's/#{singular_modelname.capitalize}.new/@#{singularized_ancestors.last}.#{modelname}.build/' app/controllers/#{modelname}_controller.rb`
-      print `sed #{icmd} -e 's/redirect_to @#{singular_modelname},/redirect_to [@#{singularized_ancestors.join(', @')}#{singular_modelname}],/' app/controllers/#{modelname}_controller.rb`
-      print `sed #{icmd} -e 's/, location: @#{singular_modelname}/, location: [@#{singularized_ancestors.join(', @')}#{singular_modelname}]/' app/controllers/#{modelname}_controller.rb`
-      print `sed #{icmd} -e 's/redirect_to #{modelname}_url/redirect_to [#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}:#{modelname}]/' app/controllers/#{modelname}_controller.rb`
+      print `sed #{icmd} -e 's/redirect_to @#{singular_modelname},/redirect_to [@#{singularized_ancestors.join(', @')}, @#{singular_modelname}],/' app/controllers/#{modelname}_controller.rb`
+      print `sed #{icmd} -e 's/, location: @#{singular_modelname}/, location: [@#{singularized_ancestors.join(', @')}, @#{singular_modelname}]/' app/controllers/#{modelname}_controller.rb`
+      print `sed #{icmd} -e 's/redirect_to #{modelname}_url/redirect_to [#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, :#{modelname}]/' app/controllers/#{modelname}_controller.rb`
       print `sed #{icmd} -e 's/#{singular_modelname.capitalize}.find(params[:id])/@#{singularized_ancestors.last}.#{modelname}.find(params[:id])/' app/controllers/#{modelname}_controller.rb`
       
       print "Updating app/views/#{modelname}/_form.html.erb.\n"
-      print `sed #{icmd} -e 's/form_for(@#{singular_modelname})/form_for([@#{singularized_ancestors.join(', @')}#{singular_modelname}])/' app/views/#{modelname}/_form.html.erb`
+      print `sed #{icmd} -e 's/form_for(@#{singular_modelname})/form_for([@#{singularized_ancestors.join(', @')}, @#{singular_modelname}])/' app/views/#{modelname}/_form.html.erb`
       
       print "Updating app/views/#{modelname}/edit.html.erb.\n"
       print `sed #{icmd} -e 's/Edit \\(.*\\) - $/Edit \\1 - #{singularized_ancestors.last.to_s.capitalize} <%= @#{singularized_ancestors.last}.id %>/' app/views/#{modelname}/edit.html.erb`
       print `sed #{icmd} -e 's/<h1>Editing \\(.*\\)<\\/h1>/<h1>Editing \\1 <small>#{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %><\\/small><\\/h1>/' app/views/#{modelname}/edit.html.erb`
-      print `sed #{icmd} -e 's/.html_safe, @#{singular_modelname}, /.html_safe, [@#{singularized_ancestors.join(', @')}#{singular_modelname}], /' app/views/#{modelname}/edit.html.erb`
+      print `sed #{icmd} -e 's/.html_safe, @#{singular_modelname}, /.html_safe, [@#{singularized_ancestors.join(', @')}, @#{singular_modelname}], /' app/views/#{modelname}/edit.html.erb`
     
       print "Updating app/views/#{modelname}/index.html.erb.\n"
-      print `sed #{icmd} -e 's/#{modelname.capitalize} -$/#{modelname.capitalize} - #{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %>/' app/views/#{modelname}/index.html.erb`
+      print `sed #{icmd} -e 's/#{modelname.capitalize} - $/#{modelname.capitalize} - #{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %>/' app/views/#{modelname}/index.html.erb`
       print `sed #{icmd} -e 's/.html_safe, "\\/", /.html_safe, [#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}], /' app/views/#{modelname}/index.html.erb`
-      print `sed #{icmd} -e 's/.html_safe, [:new, :#{singular_modelname}], /.html_safe, [:new, #{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}:#{singular_modelname}], /' app/views/#{modelname}/index.html.erb`
+      print `sed #{icmd} -e 's/.html_safe, [:new, :#{singular_modelname}], /.html_safe, [:new, #{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, :#{singular_modelname}], /' app/views/#{modelname}/index.html.erb`
       print `sed #{icmd} -e 's/Listing #{modelname.capitalize}$/Listing #{modelname.capitalize}\\\n  <small>#{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %><\\/small>/' app/views/#{modelname}/index.html.erb`
       print `sed #{icmd} -e 's/data-href="<%= #{singular_modelname}_path(#{singular_modelname}) %>"/data-href="<%= polymorphic_path([#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, #{singular_modelname}]) %>"/' app/views/#{modelname}/index.html.erb`
       print `sed #{icmd} -e 's/, #{singular_modelname} %><\\/td>/, [#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, #{singular_modelname}] %><\\/td>/' app/views/#{modelname}/index.html.erb`
@@ -66,12 +66,12 @@ module Bootscaf
       print "Updating app/views/#{modelname}/new.html.erb.\n"
       print `sed #{icmd} -e 's/Create #{singular_modelname.capitalize} - $/Create #{singular_modelname.capitalize} - #{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %>/' app/views/#{modelname}/new.html.erb`
       print `sed #{icmd} -e 's/New #{singular_modelname.capitalize}$/New #{singular_modelname.capitalize} <small>#{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %><\\/small>/' app/views/#{modelname}/new.html.erb`
-      print `sed #{icmd} -e 's/, giveaways_path, /, polymorphic_path([#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, :#{modelname}]), /' app/views/#{modelname}/new.html.erb`
+      print `sed #{icmd} -e 's/, #{modelname}_path, /, polymorphic_path([#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, :#{modelname}]), /' app/views/#{modelname}/new.html.erb`
       
       print "Updating app/views/#{modelname}/show.html.erb.\n"
       print `sed #{icmd} -e 's/#{singular_modelname.capitalize} Details - $/#{singular_modelname.capitalize} Details - #{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %>/' app/views/#{modelname}/show.html.erb`
       print `sed #{icmd} -e 's/ #{modelname}_path,/ polymorphic_path([#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, :#{modelname}]),/' app/views/#{modelname}/show.html.erb`
-      print `sed #{icmd} -e 's/edit_#{singular_modelname}_path(@#{singular_modelname})/polymorphic_path([:edit, #{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, :#{modelname}])/' app/views/#{modelname}/show.html.erb`
+      print `sed #{icmd} -e 's/edit_#{singular_modelname}_path(@#{singular_modelname})/polymorphic_path([:edit, #{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, @#{singular_modelname}])/' app/views/#{modelname}/show.html.erb`
       print `sed #{icmd} -e 's/#{singular_modelname.capitalize} Details$/#{singular_modelname.capitalize} Details <small>#{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %><\\/small>/' app/views/#{modelname}/show.html.erb`
       
     end
@@ -209,7 +209,7 @@ module Bootscaf
                 
         print "Updating app/views/#{modelname}/index.html.erb. "
         print `sed #{icmd} -e 's/<p id="notice"><%= notice %><\\/p>//' app/views/#{modelname}/index.html.erb`
-        print `sed #{icmd} -e 's/<h1>Listing \\(.*\\)s<\\/h1>/<% content_for :page_title do %>\\\n\\1s - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>\\\n<div class="pull-left">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-step-backward\\\\" aria-hidden=\\\\"true\\\\"><\\/span>".html_safe, "\\/", class: "btn btn-default", title: "Back" %>\\\n\\&nbsp;\\\n<\\/div>\\\n\\\n<div class="pull-right">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-plus-sign\\\\" aria-hidden=\\\\"true\\\\"><\\/span> New \\1".html_safe, [:new, :#{Bootscaf::Utils.singularize(modelname)}], class: "btn btn-success" %>\\\n<\\/div>\\\nListing \\1s\\\n<\\/h1>\\\n<\\/div>\\\n\\\n<table class="table table-striped table-hover tablesorter" id="\\1s-table">/' app/views/#{modelname}/index.html.erb`
+        print `sed #{icmd} -e 's/<h1>Listing \\(.*\\)s<\\/h1>/<% content_for :page_title do %>\\\n\\1s - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>\\\n<div class="pull-left">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-step-backward\\\\" aria-hidden=\\\\"true\\\\"><\\/span>".html_safe, "\\/", class: "btn btn-default", title: "Back" %>\\\n\\&nbsp;\\\n<\\/div>\\\n\\\n<div class="pull-right">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-plus-sign\\\\" aria-hidden=\\\\"true\\\\"><\\/span> New \\1".html_safe, [:new, :#{Bootscaf::Utils.singularize(modelname)}], class: "btn btn-success" %>\\\n<\\/div>\\\nListing \\1s\\\n<\\/h1>\\\n<\\/div>\\\n\\\n<table class="table table-striped table-hover tablesorter" id="#{modelname}-table">/' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<th>\\(.*\\)<\\/th>/<th><span>\\1<\\/span><\\/th>/g' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<table>//' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<\\/table>/<\\/table>\\\n<\\/div>/' app/views/#{modelname}/index.html.erb`
