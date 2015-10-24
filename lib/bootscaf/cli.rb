@@ -215,7 +215,7 @@ module Bootscaf
         print "Updating app/views/#{modelname}/edit.html.erb. "
         print `sed #{icmd} -e 's/<h1>Editing \\(.*\\)<\\/h1>/<% content_for :page_title do %>\\\nEdit \\1 - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>Editing \\1<\\/h1>\\\n<\\/div>/' app/views/#{modelname}/edit.html.erb`
         print `sed #{icmd} -e 's/<%= link_to '\\''Show'\\'', @#{singular_modelname} %> \\|/<div class="clearfix"><\\/div>\\\n<div class="pull-left">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-ban-circle\\\\" aria-hidden=\\\\"true\\\\"><\\/span> Cancel".html_safe, @#{singular_modelname}, class: "btn btn-default" %>\\\n<\\/div>/' app/views/#{modelname}/edit.html.erb`
-        print `sed #{icmd} -e 's/<%= link_to '\\''Back'\\'', #{modelname}_path %>/<div class="pull-right">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-trash\\\\" aria-hidden=\\\\"true\\\\"><\\/span> Delete #{singular_modelname}...".html_safe, @\\1, method: :delete, data: { confirm: "Are you sure you want to delete this #{singular_modelname}?" }, class: "btn btn-danger" %>\\\n<\\/div>\\\n<\\/div>/' app/views/#{modelname}/edit.html.erb`  
+        print `sed #{icmd} -e 's/<%= link_to '\\''Back'\\'', #{modelname}_path %>/<div class="pull-right">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-trash\\\\" aria-hidden=\\\\"true\\\\"><\\/span> Delete #{singular_modelname}...".html_safe, @#{singular_modelname}, method: :delete, data: { confirm: "Are you sure you want to delete this #{singular_modelname}?" }, class: "btn btn-danger" %>\\\n<\\/div>\\\n<\\/div>/' app/views/#{modelname}/edit.html.erb`  
         print "\n"
                 
         print "Updating app/views/#{modelname}/index.html.erb. "
