@@ -20,7 +20,8 @@ module Bootscaf
     desc "nest PLURALMODELNAME:PLURALMODELNAME[:PLURALMODELNAME...]", "Updates the scaffold controller and views to nest the models"
     def nest(nestpath)
       
-      is_mac = (RbConfig::CONFIG['host_os'] =~ /^darwin/) >= 0
+      darwin_match = (RbConfig::CONFIG['host_os'] =~ /^darwin/)
+      is_mac = !darwin_match.nil? && darwin_match >= 0
       icmd = is_mac ? "-i ''" : '--in-place'
       
       fullpath = nestpath.split(':').map { |a| a.downcase }
@@ -93,7 +94,8 @@ module Bootscaf
         models = Dir.glob("#{Dir.pwd}/app/views/*").select { |f| File.directory? f }.map { |f| f.split('/app/views/').last }.reject { |f| f == 'layouts' }
       end
       
-      is_mac = (RbConfig::CONFIG['host_os'] =~ /^darwin/) >= 0
+      darwin_match = (RbConfig::CONFIG['host_os'] =~ /^darwin/)
+      is_mac = !darwin_match.nil? && darwin_match >= 0
       icmd = is_mac ? "-i ''" : '--in-place'
       
       print "Would you like to update app/views/layouts/application.html.erb [y/n(default)]? "
