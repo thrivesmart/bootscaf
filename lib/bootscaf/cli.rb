@@ -228,10 +228,10 @@ module Bootscaf
         print `sed #{icmd} -e 's/<td><%= link_to '\\''Show'\\'', \\(.*\\) %><\\/td>//' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<td><%= link_to '\\''Edit'\\'', edit_\\(.*\\)_path(\\(.*\\)) %><\\/td>//' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<td><%= link_to '\\''Destroy'\\'', \\(.*\\), method: :delete, data: { confirm: '\\''Are you sure?'\\'' } %><\\/td>//' app/views/#{modelname}/index.html.erb`
-        print `sed #{icmd} -e 's/<% @#{modelname}.each do \\|\\(.*\\)\\| %>/<% unless @#{modelname}.any? %>\\\n<tr id="empty-table">\\\n<td class="bg-warning" colspan="2">No #{modelname} created yet.<\\/td>\\\n<\\/tr>\\\n<% end %>\\\n<% @#{modelname}.each do \\|\\1\\| %>\\\n<tr class="linked-row" data-href="<%= \\1_path(\\1) %>">/' app/views/#{modelname}/index.html.erb`
+        print `sed #{icmd} -e 's/<% @#{modelname}.each do \\|#{singular_modelname}| %>/<% unless @#{modelname}.any? %>\\\n<tr id="empty-table">\\\n<td class="bg-warning" colspan="2">No #{modelname} created yet.<\\/td>\\\n<\\/tr>\\\n<% end %>\\\n<% @#{modelname}.each do \\|#{singular_modelname}| %>\\\n<tr class="linked-row" data-href="<%= #{singular_modelname}_path(#{singular_modelname}) %>">/' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<tr>//' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<thead>/<thead>\\\n<tr>/' app/views/#{modelname}/index.html.erb`
-        print `sed #{icmd} -e 's/<td><%= \\(.*\\)\\.\\(.*\\) %><\\/td>/<td><%= link_to \\1.\\2, \\1 %><\\/td>/' app/views/#{modelname}/index.html.erb`
+        print `sed #{icmd} -e 's/<td><%= #{singular_modelname}.\\(.*\\) %><\\/td>/<td><%= link_to #{singular_modelname}.\\1, #{singular_modelname} %><\\/td>/' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<br>//' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<%= link_to '\\''New \\(.*\\)'\\'', new_\\(.*\\)_path %>//' app/views/#{modelname}/index.html.erb`
         print "\n"
