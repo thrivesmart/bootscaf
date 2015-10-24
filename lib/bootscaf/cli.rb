@@ -42,7 +42,7 @@ module Bootscaf
       print `sed #{icmd} -e 's/redirect_to @#{singular_modelname},/redirect_to [@#{singularized_ancestors.join(', @')}, @#{singular_modelname}],/' app/controllers/#{modelname}_controller.rb`
       print `sed #{icmd} -e 's/, location: @#{singular_modelname}/, location: [@#{singularized_ancestors.join(', @')}, @#{singular_modelname}]/' app/controllers/#{modelname}_controller.rb`
       print `sed #{icmd} -e 's/redirect_to #{modelname}_url/redirect_to [#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, :#{modelname}]/' app/controllers/#{modelname}_controller.rb`
-      print `sed #{icmd} -e 's/#{singular_modelname.capitalize}.find(params[:id])/@#{singularized_ancestors.last}.#{modelname}.find(params[:id])/' app/controllers/#{modelname}_controller.rb`
+      print `sed #{icmd} -e 's/#{singular_modelname.capitalize}.find(params\\[:id\\])/@#{singularized_ancestors.last}.#{modelname}.find(params[:id])/' app/controllers/#{modelname}_controller.rb`
       
       print "Updating app/views/#{modelname}/_form.html.erb.\n"
       print `sed #{icmd} -e 's/form_for(@#{singular_modelname})/form_for([@#{singularized_ancestors.join(', @')}, @#{singular_modelname}])/' app/views/#{modelname}/_form.html.erb`
