@@ -32,8 +32,10 @@ module Bootscaf
       print "Running on #{modelname} scaffolds with nesting path `#{singularized_ancestors.join(' > ')}`.\n"
       
       print "Updating app/controllers/#{modelname}_controller.rb.\n"
-      singularized_ancestors.each_with_index do |sa, idx|
+      singularized_ancestors.reverse.each do |sa|
         print `sed #{icmd} -e 's/Controller < ApplicationController/Controller < ApplicationController\\\nbefore_action :set_#{sa}/' app/controllers/#{modelname}_controller.rb`
+      end
+      singularized_ancestors.each_with_index do |sa, idx|
         if idx == 0
           print `sed #{icmd} -e 's/private/private\\\n\\\ndef set_#{sa}\\\n@#{sa} = #{sa.capitalize}.find_by_id(params[:#{sa}_id])\\\nraise ActiveRecord::RecordNotFound unless @#{sa}\\\nend\\\n/' app/controllers/#{modelname}_controller.rb`
         else
