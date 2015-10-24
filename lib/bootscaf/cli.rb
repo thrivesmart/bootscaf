@@ -55,7 +55,7 @@ module Bootscaf
       print "Updating app/views/#{modelname}/index.html.erb.\n"
       print `sed #{icmd} -e 's/#{modelname.capitalize} - $/#{modelname.capitalize} - #{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %>/' app/views/#{modelname}/index.html.erb`
       print `sed #{icmd} -e 's/.html_safe, "\\/", /.html_safe, [#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}], /' app/views/#{modelname}/index.html.erb`
-      print `sed #{icmd} -e 's/.html_safe, [:new, :#{singular_modelname}], /.html_safe, [:new, #{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, :#{singular_modelname}], /' app/views/#{modelname}/index.html.erb`
+      print `sed #{icmd} -e 's/.html_safe, \\[:new, :#{singular_modelname}\\], /.html_safe, [:new, #{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, :#{singular_modelname}], /' app/views/#{modelname}/index.html.erb`
       print `sed #{icmd} -e 's/Listing #{modelname.capitalize}$/Listing #{modelname.capitalize}\\\n  <small>#{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %><\\/small>/' app/views/#{modelname}/index.html.erb`
       print `sed #{icmd} -e 's/data-href="<%= #{singular_modelname}_path(#{singular_modelname}) %>"/data-href="<%= polymorphic_path([#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, #{singular_modelname}]) %>"/' app/views/#{modelname}/index.html.erb`
       print `sed #{icmd} -e 's/, #{singular_modelname} %><\\/td>/, [#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, #{singular_modelname}] %><\\/td>/' app/views/#{modelname}/index.html.erb`
