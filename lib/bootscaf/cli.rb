@@ -32,9 +32,13 @@ module Bootscaf
       print "Running on #{modelname} scaffolds with nesting path `#{singularized_ancestors.join(' > ')}`.\n"
       
       print "Updating app/controllers/#{modelname}_controller.rb.\n"
-      singularized_ancestors.each do |sa|
+      singularized_ancestors.each_with_index do |sa, idx|
         print `sed #{icmd} -e 's/Controller < ApplicationController/Controller < ApplicationController\\\nbefore_action :set_#{sa}/' app/controllers/#{modelname}_controller.rb`
-        print `sed #{icmd} -e 's/private/private\\\n\\\ndef set_#{sa}\\\n@#{sa} = #{sa.capitalize}.find_by_id(params[:#{sa}_id])\\\nraise ActiveRecord::RecordNotFound unless @#{sa}\\\nend\\\n/' app/controllers/#{modelname}_controller.rb`
+        if idx == 0
+          print `sed #{icmd} -e 's/private/private\\\n\\\ndef set_#{sa}\\\n@#{sa} = #{sa.capitalize}.find_by_id(params[:#{sa}_id])\\\nraise ActiveRecord::RecordNotFound unless @#{sa}\\\nend\\\n/' app/controllers/#{modelname}_controller.rb`
+        else
+          print `sed #{icmd} -e 's/private/private\\\n\\\ndef set_#{sa}\\\n@#{sa} = @#{singularized_ancestors[idx-1]}.#{ancestors_only[idx]}.find_by_id(params[:#{sa}_id])\\\nraise ActiveRecord::RecordNotFound unless @#{sa}\\\nend\\\n/' app/controllers/#{modelname}_controller.rb`
+        end
         print `sed #{icmd} -e 's/.permit(\\(.*\\):#{sa}_id, \\(.*\\))/.permit(\\1\\2)/' app/controllers/#{modelname}_controller.rb`
       end
       print `sed #{icmd} -e 's/#{singular_modelname.capitalize}.all/@#{singularized_ancestors.last}.#{modelname}.all/' app/controllers/#{modelname}_controller.rb`
@@ -50,7 +54,8 @@ module Bootscaf
       print "Updating app/views/#{modelname}/edit.html.erb.\n"
       print `sed #{icmd} -e 's/Edit \\(.*\\) - $/Edit \\1 - #{singularized_ancestors.last.to_s.capitalize} <%= @#{singularized_ancestors.last}.id %>/' app/views/#{modelname}/edit.html.erb`
       print `sed #{icmd} -e 's/<h1>Editing \\(.*\\)<\\/h1>/<h1>Editing \\1 <small>#{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %><\\/small><\\/h1>/' app/views/#{modelname}/edit.html.erb`
-      print `sed #{icmd} -e 's/.html_safe, @#{singular_modelname}, /.html_safe, [@#{singularized_ancestors.join(', @')}, @#{singular_modelname}], /' app/views/#{modelname}/edit.html.erb`
+      print `sed #{icmd} -e 's/.html_safe, @#{singular_modelname}, class:/.html_safe, [@#{singularized_ancestors.join(', @')}, @#{singular_modelname}], class:/' app/views/#{modelname}/edit.html.erb`
+      print `sed #{icmd} -e 's/.html_safe, @#{singular_modelname}, method:/.html_safe, [@#{singularized_ancestors.join(', @')}, @#{singular_modelname}], method:/' app/views/#{modelname}/edit.html.erb`
     
       print "Updating app/views/#{modelname}/index.html.erb.\n"
       print `sed #{icmd} -e 's/#{modelname.capitalize} - $/#{modelname.capitalize} - #{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %>/' app/views/#{modelname}/index.html.erb`
@@ -217,7 +222,7 @@ module Bootscaf
         print `sed #{icmd} -e 's/<td><%= link_to '\\''Show'\\'', \\(.*\\) %><\\/td>//' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<td><%= link_to '\\''Edit'\\'', edit_\\(.*\\)_path(\\(.*\\)) %><\\/td>//' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<td><%= link_to '\\''Destroy'\\'', \\(.*\\), method: :delete, data: { confirm: '\\''Are you sure?'\\'' } %><\\/td>//' app/views/#{modelname}/index.html.erb`
-        print `sed #{icmd} -e 's/<% @\\(.*\\)s.each do \\|\\(.*\\)\\| %>/<% unless @\\1s.any? %>\\\n<tr id="empty-table">\\\n<td class="bg-warning" colspan="2">No \\1s created yet.<\\/td>\\\n<\\/tr>\\\n<% end %>\\\n<% @\\1s.each do \\|\\1\\| %>\\\n<tr class="linked-row" data-href="<%= \\1_path(\\1) %>">/' app/views/#{modelname}/index.html.erb`
+        print `sed #{icmd} -e 's/<% @#{modelname}.each do \\|\\(.*\\)\\| %>/<% unless @#{modelname}.any? %>\\\n<tr id="empty-table">\\\n<td class="bg-warning" colspan="2">No #{modelname} created yet.<\\/td>\\\n<\\/tr>\\\n<% end %>\\\n<% @#{modelname}.each do \\|\\2\\| %>\\\n<tr class="linked-row" data-href="<%= \\2_path(\\2) %>">/' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<tr>//' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<thead>/<thead>\\\n<tr>/' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<td><%= \\(.*\\)\\.\\(.*\\) %><\\/td>/<td><%= link_to \\1.\\2, \\1 %><\\/td>/' app/views/#{modelname}/index.html.erb`
