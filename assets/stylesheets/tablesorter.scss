@@ -1,0 +1,17 @@
+.tablesorter thead {
+  cursor:pointer;
+}
+.tablesorter th {
+  background-position:right 9px center;
+  background-size: 10px 11.23px;
+  background-repeat: no-repeat;
+}
+.tablesorter th span {
+  padding-right: 10px;
+}
+.tablesorter th.headerSortUp {
+  background-image: image-url('tablesorter-up.png');
+}
+.tablesorter th.headerSortDown {
+  background-image: image-url('tablesorter-down.png');
+}
