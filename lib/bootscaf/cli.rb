@@ -140,11 +140,11 @@ module Bootscaf
         print "\n"
       end
     
-      print "Would you like to overwrite scaffolds.css.scss with the bootrapified version [y/n(default)]? "
+      print "Would you like to overwrite scaffolds.scss with the bootrapified version [y/n(default)]? "
       use_scaffolds_css = $stdin.gets.strip
       if YESSES.include?(use_scaffolds_css)
-        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/scaffolds.css.scss", "#{Dir.pwd}/app/assets/stylesheets"
-        print "Wrote assets/stylesheets/scaffolds.css.scss\n"
+        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/scaffolds.scss", "#{Dir.pwd}/app/assets/stylesheets"
+        print "Wrote assets/stylesheets/scaffolds.scss\n"
       end
     
       print "Would you like to use tablesorter [y(default)/n]? "
@@ -167,8 +167,8 @@ module Bootscaf
         FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/images/tablesorter.png", "#{Dir.pwd}/app/assets/images"
         print "Wrote assets/images/tablesorter.png\n"
         
-        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/tablesorter.css.scss", "#{Dir.pwd}/app/assets/stylesheets"
-        print "Wrote assets/stylesheets/tablesorter.css.scss\n"
+        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/tablesorter.scss", "#{Dir.pwd}/app/assets/stylesheets"
+        print "Wrote assets/stylesheets/tablesorter.scss\n"
       end
     
       print "Would you like to make entire index.html.erb table rows clickable [y(default)/n]? "
@@ -178,8 +178,8 @@ module Bootscaf
         written = File.open("#{Dir.pwd}/app/assets/javascripts/table-linked-row.js", 'w') { |file| file.write(linkedrow_init_body) }
         print "Wrote #{written} - app/assets/javascripts/table-linked-row.js\n"
         
-        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/table-linked-row.css.scss", "#{Dir.pwd}/app/assets/stylesheets"
-        print "Wrote assets/stylesheets/table-linked-row.css.scss\n"
+        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/table-linked-row.scss", "#{Dir.pwd}/app/assets/stylesheets"
+        print "Wrote assets/stylesheets/table-linked-row.scss\n"
       end
     
       print "Would you like to add a 'click to select-all' input element [y(default)/n]? "
@@ -189,8 +189,8 @@ module Bootscaf
         written = File.open("#{Dir.pwd}/app/assets/javascripts/select-all-on-click.js", 'w') { |file| file.write(selectall_init_body) }
         print "Wrote #{written} - app/assets/javascripts/select-all-on-click.js\n"
         
-        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/select-all-on-click.css.scss", "#{Dir.pwd}/app/assets/stylesheets"
-        print "Wrote assets/stylesheets/select-all-on-click.css.scss\n"
+        FileUtils.cp "#{File.expand_path(File.dirname(__FILE__))}/../../assets/stylesheets/select-all-on-click.scss", "#{Dir.pwd}/app/assets/stylesheets"
+        print "Wrote assets/stylesheets/select-all-on-click.scss\n"
       end
       
       models.each do |modelname|
