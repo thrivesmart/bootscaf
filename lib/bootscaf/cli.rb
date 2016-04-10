@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'thor'
 require 'net/http'
+require 'rails' # Detect Rails version
 require_relative 'utils.rb'
 require_relative 'version.rb'
 
@@ -64,7 +65,11 @@ module Bootscaf
       print `sed #{icmd} -e 's/#{modelname.capitalize} - $/#{modelname.capitalize} - #{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %>/' app/views/#{modelname}/index.html.erb`
       print `sed #{icmd} -e 's/.html_safe, "\\/", /.html_safe, [#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}], /' app/views/#{modelname}/index.html.erb`
       print `sed #{icmd} -e 's/.html_safe, \\[:new, :#{singular_modelname}\\], /.html_safe, [:new, #{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, :#{singular_modelname}], /' app/views/#{modelname}/index.html.erb`
-      print `sed #{icmd} -e 's/#{modelname.capitalize}$/#{modelname.capitalize}\\\n  <small>#{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %><\\/small>/' app/views/#{modelname}/index.html.erb`
+      if Rails::VERSION::MAJOR >= 5
+        print `sed #{icmd} -e 's/#{modelname.capitalize}$/#{modelname.capitalize}\\\n  <small>#{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %><\\/small>/' app/views/#{modelname}/index.html.erb`
+      else
+        print `sed #{icmd} -e 's/Listing #{modelname.capitalize}$/Listing #{modelname.capitalize}\\\n  <small>#{singularized_ancestors.last.capitalize} <%= @#{singularized_ancestors.last}.id %><\\/small>/' app/views/#{modelname}/index.html.erb`
+      end
       print `sed #{icmd} -e 's/data-href="<%= #{singular_modelname}_path(#{singular_modelname}) %>"/data-href="<%= polymorphic_path([#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, #{singular_modelname}]) %>"/' app/views/#{modelname}/index.html.erb`
       print `sed #{icmd} -e 's/, #{singular_modelname} %><\\/td>/, [#{singularized_ancestors.map{|sa| "@#{sa}"}.join(', ')}, #{singular_modelname}] %><\\/td>/' app/views/#{modelname}/index.html.erb`
     
@@ -220,7 +225,11 @@ module Bootscaf
                 
         print "Updating app/views/#{modelname}/index.html.erb. "
         print `sed #{icmd} -e 's/<p id="notice"><%= notice %><\\/p>//' app/views/#{modelname}/index.html.erb`
-        print `sed #{icmd} -e 's/<h1>\\(.*\\)s<\\/h1>/<% content_for :page_title do %>\\\n\\1s - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>\\\n<div class="pull-left">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-step-backward\\\\" aria-hidden=\\\\"true\\\\"><\\/span>".html_safe, "\\/", class: "btn btn-default", title: "Back" %>\\\n\\&nbsp;\\\n<\\/div>\\\n\\\n<div class="pull-right">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-plus-sign\\\\" aria-hidden=\\\\"true\\\\"><\\/span> New \\1".html_safe, [:new, :#{Bootscaf::Utils.singularize(modelname)}], class: "btn btn-success" %>\\\n<\\/div>\\\n\\1s\\\n<\\/h1>\\\n<\\/div>\\\n\\\n<table class="table table-striped table-hover tablesorter" id="#{modelname}-table">/' app/views/#{modelname}/index.html.erb`
+        if Rails::VERSION::MAJOR >= 5
+          print `sed #{icmd} -e 's/<h1>\\(.*\\)s<\\/h1>/<% content_for :page_title do %>\\\n\\1s - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>\\\n<div class="pull-left">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-step-backward\\\\" aria-hidden=\\\\"true\\\\"><\\/span>".html_safe, "\\/", class: "btn btn-default", title: "Back" %>\\\n\\&nbsp;\\\n<\\/div>\\\n\\\n<div class="pull-right">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-plus-sign\\\\" aria-hidden=\\\\"true\\\\"><\\/span> New \\1".html_safe, [:new, :#{Bootscaf::Utils.singularize(modelname)}], class: "btn btn-success" %>\\\n<\\/div>\\\n\\1s\\\n<\\/h1>\\\n<\\/div>\\\n\\\n<table class="table table-striped table-hover tablesorter" id="#{modelname}-table">/' app/views/#{modelname}/index.html.erb`
+        else
+          print `sed #{icmd} -e 's/<h1>Listing \\(.*\\)s<\\/h1>/<% content_for :page_title do %>\\\n\\1s - \\\n<% end %>\\\n<div class="container">\\\n<div class="page-header">\\\n<h1>\\\n<div class="pull-left">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-step-backward\\\\" aria-hidden=\\\\"true\\\\"><\\/span>".html_safe, "\\/", class: "btn btn-default", title: "Back" %>\\\n\\&nbsp;\\\n<\\/div>\\\n\\\n<div class="pull-right">\\\n<%= link_to "<span class=\\\\"glyphicon glyphicon-plus-sign\\\\" aria-hidden=\\\\"true\\\\"><\\/span> New \\1".html_safe, [:new, :#{Bootscaf::Utils.singularize(modelname)}], class: "btn btn-success" %>\\\n<\\/div>\\\nListing \\1s\\\n<\\/h1>\\\n<\\/div>\\\n\\\n<table class="table table-striped table-hover tablesorter" id="#{modelname}-table">/' app/views/#{modelname}/index.html.erb`
+        end
         print `sed #{icmd} -e 's/<th>\\(.*\\)<\\/th>/<th><span>\\1<\\/span><\\/th>/g' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<table>//' app/views/#{modelname}/index.html.erb`
         print `sed #{icmd} -e 's/<\\/table>/<\\/table>\\\n<\\/div>/' app/views/#{modelname}/index.html.erb`
