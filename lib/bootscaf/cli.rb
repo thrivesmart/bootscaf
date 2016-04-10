@@ -115,7 +115,7 @@ module Bootscaf
         uri = URI.parse("http://code.jquery.com/")
         http = Net::HTTP.new(uri.host, uri.port)
         http_body = http.get(uri.request_uri).body
-        minor_version=/<a .* href='\/jquery\-2\.(.*?)\.min\.js' .*>minified<\/a>/.match(http_body)[1]
+        minor_version = /<a .* href='\/jquery\-2\.(.*?)\.min\.js' .*>minified<\/a>/.match(http_body)[1]
         latest_jquery_version = "2.#{minor_version}"
         print "#{latest_jquery_version}\n"
         latest_boostrap_version ||= LAST_KNOWN_BOOTSTRAP_VERSION
