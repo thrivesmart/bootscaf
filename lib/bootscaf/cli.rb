@@ -153,7 +153,7 @@ module Bootscaf
         uri = URI.parse('https://raw.githubusercontent.com/christianbach/tablesorter/master/jquery.tablesorter.js')
         http = Net::HTTP.new(uri.host, uri.port); http.use_ssl = true
         http_body = http.get(uri.request_uri).body
-        written = File.open("#{Dir.pwd}/app/assets/javascripts/jquery.tablesorter.js", 'w') { |file| file.write(http_body) }
+        written = File.open("#{Dir.pwd}/app/assets/javascripts/jquery.tablesorter.js", 'w') { |file| file.write(http_body.to_s.force_encoding('UTF-8')) }
         print "Wrote #{written} - app/assets/javascripts/jquery.tablesorter.js\n"
         
         tablesorter_init_body = "$('table.tablesorter').tablesorter();\n"
